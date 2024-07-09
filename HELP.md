@@ -1,7 +1,7 @@
 # Read Me First
 The following was discovered as part of building this project:
 
-* The original package name 'hello.hello-spring' is invalid and this project uses 'hello.hello_spring' instead.
+* The original package name 'hello.hello-spring' is invalid and this project uses 'hello.hellospring' instead.
 
 # Getting Started
 
