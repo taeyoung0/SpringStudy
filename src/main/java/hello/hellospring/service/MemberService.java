@@ -8,8 +8,11 @@ import java.util.List;
 import java.util.Optional;
 
 public class MemberService {
-    
-    private final MemberRepository memberRepository = new MemoryMemberRepository(); // 구현체를 변경했을때 수정이 용이하도록 인터페이스를 타입으로 설정
+
+    private final MemberRepository memberRepository;
+    public MemberService(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
     
     // 회원가입 메서드
     public Long join(Member member) {
