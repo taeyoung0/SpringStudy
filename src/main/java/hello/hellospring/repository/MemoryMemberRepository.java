@@ -4,7 +4,7 @@ import hello.hellospring.domain.Member;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
-@Repository
+
 public class MemoryMemberRepository implements MemberRepository{
 
     private static Map<Long, Member> store = new HashMap<>();   // Map은 키-값 구조, 회원 ID를 키로 member 객체를 값으로 저장
