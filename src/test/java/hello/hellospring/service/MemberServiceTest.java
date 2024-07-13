@@ -2,11 +2,9 @@ package hello.hellospring.service;
 
 import hello.hellospring.domain.Member;
 import hello.hellospring.repository.MemoryMemberRepository;
-import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.Optional;
 
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -17,11 +15,17 @@ class MemberServiceTest {
     MemberService memberService;
     MemoryMemberRepository memberRepository;
 
-    @BeforeEach
+    @BeforeEach         // 테스트 메서드 실행 전에 이 메서드 실행
     public void beforeEach() {
-        memberRepository = new MemoryMemberRepository();
-        memberService = new MemberService(memberRepository);
+        memberRepository = new MemoryMemberRepository();    // 새로운 MemoryMemberRepository 인스턴스를 생성
+        memberService = new MemberService(memberRepository);    // 생성자를 통해 memberRepository를 주입받아 MemberService 인스턴스를 생성
     }
+
+    @AfterEach
+    public void afterEach() {
+        memberRepository.clearStore();
+    }
+
     @Test
     void 회원가입() {
         // given 테스트에 사용할 데이터를 준비

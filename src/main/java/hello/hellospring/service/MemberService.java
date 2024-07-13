@@ -3,15 +3,20 @@ package hello.hellospring.service;
 import hello.hellospring.domain.Member;
 import hello.hellospring.repository.MemberRepository;
 import hello.hellospring.repository.MemoryMemberRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class MemberService {
 
     private final MemberRepository memberRepository;
-    public MemberService(MemberRepository memberRepository) {
-        this.memberRepository = memberRepository;
+
+    @Autowired
+    public MemberService(MemberRepository memberRepository) { // 외부에서 의존성 주입을 통해 동일한 인스턴스 사용 가능
+        this.memberRepository = memberRepository;       // 코드의 유연성과 재사용성을 높이고 클래스 간의 결합도를 낮춤
     }
     
     // 회원가입 메서드

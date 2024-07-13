@@ -1,11 +1,10 @@
 package hello.hellospring.repository;
 
 import hello.hellospring.domain.Member;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import java.util.List;
-import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class MemoryMemberRepositoryTest { // 테스트 클래스를 정의
@@ -13,7 +12,7 @@ class MemoryMemberRepositoryTest { // 테스트 클래스를 정의
 
     @AfterEach
     public void afterEach() { // 각 테스트 후에 실행될 메서드를 정의
-        repository.ClearStore(); // 저장소를 초기화하는 메서드 호출
+        repository.clearStore(); // 저장소를 초기화하는 메서드 호출
     }
 
     @Test
