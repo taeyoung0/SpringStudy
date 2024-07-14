@@ -3,6 +3,7 @@ package hello.hellospring.repository;
 import hello.hellospring.domain.Member;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import javax.sql.DataSource;
@@ -25,15 +26,17 @@ public class JdbcTemplateMemberRepository implements MemberRepository {
 
     @Override
     public Member save(Member member) {
+        // SimpleJdbcInsert는 DB에 데이터 삽입을 간편하게 수행할 수 있게 함
+        // jdbcTemplate의 설정 및 데이터 소스를 활용할 수 있게 생성자 인수로 전달
         SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
-        jdbcInsert.withTableName("member").usingGeneratedKeyColumns("id");
+        jdbcInsert.withTableName("member").usingGeneratedKeyColumns("id"); // insert할 테이블 이름과 자동 생성되는 키 컬럼을 지정
 
-        Map<String, Object> parameters = new HashMap<>();
-        parameters.put("name", member.getName());
+        Map<String, Object> parameters = new HashMap<>();   // 데이터베이스에 삽입할 데이터를 Map에 담음
+        parameters.put("name", member.getName());   // "name" 필드에 member 객체의 이름을 저장
 
-
-
-
+        Number key = jdbcInsert.executeAndReturnKey(new MapSqlParameterSource(parameters)); // insert를 실행하고 자동 생성된 키 값을 가져옴
+        member.setId(key.longValue());  // 가져온 키 값을 member 객체의 id에 설정
+        return member;  // 데이터베이스에 저장된 member 객체를 반환
 
     }
 
@@ -45,12 +48,13 @@ public class JdbcTemplateMemberRepository implements MemberRepository {
 
     @Override
     public Optional<Member> findByName(String name) {
-        return Optional.empty();
+        List<Member> result = jdbcTemplate.query("select * from member where name = ?", memberRowMapper(),name);
+        return result.stream().findAny();       // 조건을 만족하는 요소 중 하나를 반환
     }
 
     @Override
     public List<Member> findAll() {
-        return null;
+        return jdbcTemplate.query("select * from member", memberRowMapper());
     }
 
     private RowMapper<Member> memberRowMapper() {   // RowMapper<Member>는 데이터베이스의 한 줄(Row)을 Member 객체로 변환하는 역할

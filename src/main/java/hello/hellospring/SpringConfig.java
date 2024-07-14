@@ -1,6 +1,6 @@
 package hello.hellospring;
 
-import hello.hellospring.repository.JdbcMemberRepository;
+import hello.hellospring.repository.JdbcTemplateMemberRepository;
 import hello.hellospring.repository.MemberRepository;
 import hello.hellospring.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +30,6 @@ public class SpringConfig {
     @Bean
     public MemberRepository memberRepository() {
        // return new MemoryMemberRepository();        // 구현체가 MemoryMemberRepository이므로 이를 반환
-        return new JdbcMemberRepository(dataSource);    // jdbc 구현체로 교체
+        return new JdbcTemplateMemberRepository(dataSource);    // jdbc 구현체로 교체
     }
 }
