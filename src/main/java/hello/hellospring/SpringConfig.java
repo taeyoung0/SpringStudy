@@ -1,23 +1,26 @@
 package hello.hellospring;
 
-import hello.hellospring.repository.JdbcTemplateMemberRepository;
+import hello.hellospring.repository.JpaMemberRepository;
 import hello.hellospring.repository.MemberRepository;
 import hello.hellospring.service.MemberService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.persistence.EntityManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import javax.sql.DataSource;
-
 @Configuration      // 스프링 설정 파일을 의미, 스프링 빈 설정
 public class SpringConfig {
+    private EntityManager em;       // JpaMemberRepository 인수에 필요
 
-    private DataSource dataSource;
-
-    @Autowired
-    public SpringConfig(DataSource dataSource) {
-        this.dataSource = dataSource;       // 스프링이 제공해주는 DataSource를 주입받아 클래스의 필드에 할당
+    public SpringConfig(EntityManager em) {
+        this.em = em;   // 생성자를 통해 스프링이 제공하는 EntityManager 인스턴스를 주입받음
     }
+
+
+//    private DataSource dataSource;
+//    @Autowired
+//    public SpringConfig(DataSource dataSource) {
+//        this.dataSource = dataSource;       // 스프링이 제공해주는 DataSource를 주입받아 클래스의 필드에 할당
+//    }
 
 
     @Bean       // 스프링 빈을 자바 코드로 직접 등록
@@ -30,6 +33,6 @@ public class SpringConfig {
     @Bean
     public MemberRepository memberRepository() {
        // return new MemoryMemberRepository();        // 구현체가 MemoryMemberRepository이므로 이를 반환
-        return new JdbcTemplateMemberRepository(dataSource);    // jdbc 구현체로 교체
+        return new JpaMemberRepository(em);    // jpa 구현체로 교체
     }
 }

@@ -26,7 +26,7 @@ class MemberServiceIntergrationTest {
     void 회원가입() {
         // given 테스트에 사용할 데이터를 준비
         Member member = new Member();
-        member.setName("hello");
+        member.setName("spring");
 
         // when 테스트에서 하고자 하는 동작 수행
         Long saveId = memberService.join(member);       // hello 이름으로 MemberService클래스의 join 메서드 호출
