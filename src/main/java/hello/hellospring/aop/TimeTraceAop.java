@@ -21,6 +21,5 @@ public class TimeTraceAop {
             long timeMs = finish -start;                    // 실행 시간 계산
             System.out.println("END: " + joinPoint.toString() + " " + timeMs + "ms");        // 메서드 실행 종료 로그 출력
         }
-        }
     }
 }
