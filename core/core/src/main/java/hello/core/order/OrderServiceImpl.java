@@ -1,14 +1,33 @@
 package hello.core.order;
 
 import hello.core.discount.DiscountPolicy;
-import hello.core.discount.FixDiscountPolicy;
 import hello.core.member.*;
 import io.micrometer.observation.ObservationRegistry;
 
 public class OrderServiceImpl implements OrderService{
 
-    private final MemberRepository memberRepository = new MemoryMemberRepository();
-    private final DiscountPolicy discountPolicy = new FixDiscountPolicy();
+//    private final MemberRepository memberRepository = new MemoryMemberRepository();
+
+//    private final DiscountPolicy discountPolicy = new FixDiscountPolicy();
+//    private  final DiscountPolicy discountPolicy = new RateDiscountPolicy();
+    // 역할과 구현을 충실히 분리함
+    // 다형성도 활용했고 인터페이스와 구현 객체를 분리함
+    // OCP,DIP 같은 객체지향 설계 원칙은 지킨 것 처럼 보이지만 그렇지 못함
+    // discountPolicy 추상 클래스, 구현 클래스 두 클래스에 의존하고 있음, DIP 위반
+    // 기능을 확장, 변경하면서 클라이언트 코드(OrderServiceImpl)를 수정해야 한다 OCP 위반
+
+
+    // 인터페이스에만 의존하도록 코드 설계
+    // 별도의 구성 클래스를 만들어 준다
+    private final MemberRepository memberRepository;
+    private final DiscountPolicy discountPolicy;
+
+    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {     // 외부에서 의존관계 주입, DIP 지킴
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
+
+
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {
         Member member = memberRepository.findById(memberId);        // 회원 ID로 회원 정보 조회
