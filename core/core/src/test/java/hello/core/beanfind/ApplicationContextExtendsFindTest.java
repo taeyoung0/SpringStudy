@@ -51,7 +51,7 @@ public class ApplicationContextExtendsFindTest {
     }
 
     @Test
-    @DisplayName("부모 타입으로 모두 조회하기 -Object")
+    @DisplayName("부모 타입으로 모두 조회하기 -Object")         // Object는 자바의 최상위 부모 클래스
     void findAllBeanByObjectType() {
         Map<String, Object> beansOfType = ac.getBeansOfType(Object.class);
         for (String key : beansOfType.keySet()) {
