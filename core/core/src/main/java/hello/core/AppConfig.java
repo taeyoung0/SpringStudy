@@ -27,7 +27,7 @@ public class AppConfig {        // 애플리케이션이 어떻게 동작해야 
     //call AppConfig.memberRepository
     //call AppConfig.orderService
 
-    //스프링 컨테이너가 어떻게든 싱글톤을 유지하려는 것을 알 수 있다
+    //스프링 컨테이너가 어떻게든 싱글톤을 보장해줌
 
     @Bean
     public MemberService memberService() {      // 생성자 주입, 실제 동작에 필요한 구현 객체를 생성
