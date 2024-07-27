@@ -25,7 +25,7 @@ public class OrderServiceImpl implements OrderService{
     private final MemberRepository memberRepository;
     private final DiscountPolicy discountPolicy;
 
-    @Autowired
+    @Autowired          // 생성자가 1개 이면 생략 가능
     public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {     // 외부에서 의존관계 주입, DIP 지킴
         this.memberRepository = memberRepository;
         this.discountPolicy = discountPolicy;
