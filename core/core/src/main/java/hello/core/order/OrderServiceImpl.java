@@ -22,24 +22,16 @@ public class OrderServiceImpl implements OrderService{
 
     // 인터페이스에만 의존하도록 코드 설계
     // 별도의 구성 클래스를 만들어 준다
-    @Autowired private MemberRepository memberRepository;       // 필드 주입, Di 프레임워크가 없으면 아무것도 못함
-    @Autowired private DiscountPolicy discountPolicy;           // 필드 주입
+    private final MemberRepository memberRepository;       // 필드 주입, Di 프레임워크가 없으면 아무것도 못함
+    private final DiscountPolicy discountPolicy;           // 필드 주입
 
-    @Autowired(required = false)      // 수정자 주입, 주입할 대상이 없어도 동작하게 하려면 required = false
-    public void setMemberRepository(MemberRepository memberRepository) {
+
+
+    @Autowired          // 생성자가 1개 이면 생략 가능
+    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {     // 외부에서 의존관계 주입, DIP 지킴
         this.memberRepository = memberRepository;
-    }
-
-    @Autowired
-    public void setDiscountPolicy(DiscountPolicy discountPolicy) {
         this.discountPolicy = discountPolicy;
     }
-
-//    @Autowired          // 생성자가 1개 이면 생략 가능
-//    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {     // 외부에서 의존관계 주입, DIP 지킴
-//        this.memberRepository = memberRepository;
-//        this.discountPolicy = discountPolicy;
-//    }
 
 
     @Override
