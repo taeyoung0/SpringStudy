@@ -9,8 +9,10 @@ import hello.core.member.MemberServiceImpl;
 import hello.core.member.MemoryMemberRepository;
 import hello.core.order.OrderService;
 import hello.core.order.OrderServiceImpl;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 @Configuration
 public class AppConfig {        // 애플리케이션이 어떻게 동작해야 할지 전체 구성을 책임진다
@@ -42,8 +44,7 @@ public class AppConfig {        // 애플리케이션이 어떻게 동작해야 
     @Bean
     public OrderService orderService() {
         System.out.println("call AppConfig.orderService");
-//        return new OrderServiceImpl(memberRepository(), discountPolicy());
-        return null;
+        return new OrderServiceImpl(memberRepository(), discountPolicy());
     }
     @Bean
     public DiscountPolicy discountPolicy() {
