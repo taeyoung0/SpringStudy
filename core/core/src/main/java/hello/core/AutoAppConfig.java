@@ -22,15 +22,6 @@ import org.springframework.context.annotation.FilterType;
 //@Component가 붙은 클래스를 스프링 빈으로 등록
 public class AutoAppConfig {
 
-    @Autowired MemberRepository memberRepository;
-    @Autowired
-    DiscountPolicy discountPolicy;
-    
-    @Bean
-    OrderService orderService () {
-        return new OrderServiceImpl(memberRepository, discountPolicy);
-    }
-
     @Bean(name= "memoryMemberRepository")
     MemberRepository memberRepository() {
         return new MemoryMemberRepository();        //수동 빈 등록이 우선권을 가짐(수동 빈이 자동 빈을 오버라이딩 해버린다)
