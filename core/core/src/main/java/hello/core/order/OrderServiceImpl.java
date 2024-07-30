@@ -22,22 +22,14 @@ public class OrderServiceImpl implements OrderService{
 
     // 인터페이스에만 의존하도록 코드 설계
     // 별도의 구성 클래스를 만들어 준다
-    private MemberRepository memberRepository;
-    private DiscountPolicy discountPolicy;
+    private final MemberRepository memberRepository;
+    private final DiscountPolicy discountPolicy;
 
-
-    @Autowired          // 생성자가 1개 이면 생략 가능
+        @Autowired          // 생성자가 1개 이면 생략 가능
     public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {     // 외부에서 의존관계 주입, DIP 지킴
         this.memberRepository = memberRepository;
         this.discountPolicy = discountPolicy;
     }
-
-
-    public void init(MemberRepository memberRepository, DiscountPolicy discountPolicy) {    // 일반 메서드 주입
-        this.memberRepository = memberRepository;
-        this.discountPolicy = discountPolicy;
-    }
-
 
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {
