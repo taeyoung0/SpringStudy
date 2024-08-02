@@ -13,14 +13,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class LogDemoController {
 
     private final LogDemoService logDemoService;
-    private final ObjectProvider<MyLogger> myLoggerProvider; // ObjectProvider를 사용해서 myLogger를 찾을 수있는 DL이 주입된다
+    private final MyLogger myLogger; // ObjectProvider를 사용해서 myLogger를 찾을 수있는 DL이 주입된다
 
     @RequestMapping("log-demo")
     @ResponseBody
     public String logDemo(HttpServletRequest request) { // HttpServletRequest 자바에서 제공하는 표준 서블릿 규약, 고객 요청 정보를 받을 수 있음
-
         String requestURL = request.getRequestURI().toString(); // requestURL 값 http://localhost:8080/log-demo
-        MyLogger myLogger = myLoggerProvider.getObject();   //ObjectProvider.getObject() 를 호출하는 시점까지 request scope 빈의 생성을 지연
+        System.out.println("myLogger = " + myLogger.getClass()); //myLogger = class hello.core.common.MyLogger$$SpringCGLIB$$0 가짜 생성 확인
+
         myLogger.setRequestURL(requestURL);
 
         myLogger.log("controller test");
