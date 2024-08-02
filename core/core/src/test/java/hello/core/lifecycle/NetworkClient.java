@@ -22,8 +22,8 @@ public class NetworkClient {
         System.out.println("connect: " + url);
     }
 
-    public void call(String massage) {
-        System.out.println("call: " + url + " massage = " + massage);
+    public void call(String message) {
+        System.out.println("call: " + url + " message = " + message);
     }
 
     // 서비스 종료시 호출
