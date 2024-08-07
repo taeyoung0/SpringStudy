@@ -43,19 +43,21 @@ public class MemberServiceTest {
         assertEquals(member, memberRepository.findOne(saveId));    // 강의에서는 저장되어있는 객체를 꺼내와서 비교함
     }
 
-    @Test
+    @Test(expected = IllegalStateException.class)       // 예외가 발생하면 테스트 성공
     public void 중복_회원_예외() throws Exception {
         //given
         Member member1 = new Member();
-        Member member2 = new Member();
+        member1.setName("userA");
 
-        member1.setName("user");
-        member2.setName("user");
+        Member member2 = new Member();
+        member2.setName("userA");
 
         //when
         memberService.join(member1);
+        memberService.join(member2);
 
         //then
+        fail("예외가 발생해야 한다.");       // 예외가 발생하면 fail메서드는 호출x
 
     }
 
