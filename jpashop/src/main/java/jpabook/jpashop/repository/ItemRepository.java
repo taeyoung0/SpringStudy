@@ -3,7 +3,6 @@ package jpabook.jpashop.repository;
 import jakarta.persistence.EntityManager;
 import jpabook.jpashop.domain.item.Item;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.type.EntityType;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -23,7 +22,7 @@ public class ItemRepository {
         }
     }
 
-    public Item findeOne(Long id) {
+    public Item findOne(Long id) {
         return em.find(Item.class, id);
     }
 
