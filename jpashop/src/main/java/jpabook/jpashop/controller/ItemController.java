@@ -56,7 +56,7 @@ public class ItemController {
     }
 
     /**
-     * 상품 수정
+     * 상품 수정, 권장 코드
      */
     @GetMapping("/items/{itemId}/edit")
     public String updateItemForm(@PathVariable("itemId") Long itemId, Model model) { // 수정을 누르면 해당 객체의 Id값을 url의 itemId에 넣음
@@ -76,20 +76,12 @@ public class ItemController {
     }
 
     @PostMapping("/items/{itemId}/edit")
-    public String updateItem(@ModelAttribute("form") BookForm form){        // @ModelAttribute는 사용자가 폼을 제출하면 제출된 폼 데이터를 BookForm 객체로 변환하여 전달
+    public String updateItem(@PathVariable Long itemId, @ModelAttribute("form") BookForm form){        // @ModelAttribute는 사용자가 폼을 제출하면 제출된 폼 데이터를 BookForm 객체로 변환하여 전달
 
-        Book book = new Book();     // book은 준영속 엔티티(jpa가 관리하지 않는 엔티티)
-
-        // 객체로 변환된 폼 데이터의 필드를 가져와 book에 넣어줌
-        book.setId(form.getId());
-        book.setName(form.getName());
-        book.setPrice(form.getPrice());
-        book.setStockQuantity(form.getStockQuantity());
-        book.setAuthor(form.getAuthor());
-        book.setIsbn(form.getIsbn());
-
-        itemService.saveItem(book);     // 병합 사용중
+        itemService.updateItem(itemId, form.getName(), form.getPrice(), form.getStockQuantity());
         return "redirect:/items";
     }
-
 }
+
+
+

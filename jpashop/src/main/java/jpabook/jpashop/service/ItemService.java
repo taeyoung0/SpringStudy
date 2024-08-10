@@ -21,13 +21,15 @@ public class ItemService {
         itemRepository.save(item);
     }
 
+    /**
+     * 영속성 컨텍스트가 자동 변경
+     */
     @Transactional
-    public void updateItem(Long itemId, Book param) {       // 변경 감지 기능(Dirty Checking) 사용한 메서드
-        Item findItem = itemRepository.findOne(itemId);     // DB에 있는 영속성 엔티티를 꺼내옴
-        findItem.setPrice(param.getPrice());
-        findItem.setName(param.getName());
-        findItem.setStockQuantity(param.getStockQuantity());
-
+    public void updateItem(Long id, String name, int price, int stockQuantity) {       // 변경 감지 기능(Dirty Checking) 사용한 메서드
+        Item item = itemRepository.findOne(id);
+        item.setName(name);
+        item.setPrice(price);
+        item.setStockQuantity(stockQuantity);
     }
 
     public List<Item> findItems() {
