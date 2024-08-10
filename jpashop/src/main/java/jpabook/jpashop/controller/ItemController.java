@@ -20,7 +20,7 @@ public class ItemController {
     private final ItemService itemService;
 
     /**
-     * 상품 목록
+     * 상품 등록
      */
     @GetMapping("/items/new")
     public String createForm(Model model) {
@@ -44,6 +44,9 @@ public class ItemController {
         return "redirect:/";
     }
 
+    /**
+     * 상품 조회
+     */
     @GetMapping("/items")
     public String list (Model model) {
         List<Item> items = itemService.findItems();
@@ -52,11 +55,14 @@ public class ItemController {
         return "items/itemList";
     }
 
+    /**
+     * 상품 수정
+     */
     @GetMapping("/items/{itemId}/edit")
-    public String updateItemForm(@PathVariable("itemId") Long itemId, Model model) {
-        Book item = (Book) itemService.findOne(itemId);
+    public String updateItemForm(@PathVariable("itemId") Long itemId, Model model) { // 수정을 누르면 해당 객체의 Id값을 url의 itemId에 넣음
+        Book item = (Book) itemService.findOne(itemId);     // 받은 itemId값으로 객체를 찾아서 Book 형태로 캐스팅하여 반환
 
-        BookForm form = new BookForm();
+        BookForm form = new BookForm();     // 새로 form객체를 만듬
 
         form.setId(item.getId());
         form.setName(item.getName());
@@ -70,10 +76,11 @@ public class ItemController {
     }
 
     @PostMapping("/items/{itemId}/edit")
-    public String updateItem(@ModelAttribute("form") BookForm form){
+    public String updateItem(@ModelAttribute("form") BookForm form){        // @ModelAttribute는 사용자가 폼을 제출하면 제출된 폼 데이터를 BookForm 객체로 변환하여 전달
 
-        Book book = new Book();
+        Book book = new Book();     // book은 준영속 엔티티(jpa가 관리하지 않는 엔티티)
 
+        // 객체로 변환된 폼 데이터의 필드를 가져와 book에 넣어줌
         book.setId(form.getId());
         book.setName(form.getName());
         book.setPrice(form.getPrice());
@@ -81,7 +88,7 @@ public class ItemController {
         book.setAuthor(form.getAuthor());
         book.setIsbn(form.getIsbn());
 
-        itemService.saveItem(book);
+        itemService.saveItem(book);     // 병합 사용중
         return "redirect:/items";
     }
 
